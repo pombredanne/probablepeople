@@ -50,6 +50,8 @@ GROUP_LABEL = 'NameCollection'
 MODEL_FILES = {'generic' : 'generic_learned_settings.crfsuite',
                'person' : 'person_learned_settings.crfsuite',
                'company' : 'company_learned_settings.crfsuite'}
+# default model file to use if user doesn't specify a model file
+MODEL_FILE = MODEL_FILES['generic']
 
 VOWELS_Y = tuple('aeiouy')
 PREPOSITIONS = {'for', 'to', 'of', 'on'}
@@ -65,7 +67,10 @@ def _loadTagger(model_type) :
 
     return tagger
 
-TAGGERS = {model_type : _loadTagger(model_type) for model_type in MODEL_FILES}  
+TAGGERS = {model_type : _loadTagger(model_type) for model_type in MODEL_FILES}
+
+TAGGER = _loadTagger('generic')
+
 def parse(raw_string, type=None):
     if type is None:
         type='generic'
